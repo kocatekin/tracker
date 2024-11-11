@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Tracker</title>
+  <!-- 
+  <link rel="stylesheet" type="text/css" href = "{{ url_for('static', filename='style.css') }}">
+  -->
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      background-color: #00796b;
+      color: #fff;
+    }
+
+    /* Container */
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 10px;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    /* Box Styling */
+    .box {
+      width: calc(50% - 15px);
+      border: 2px solid #00796b;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      background-color: #e0f2f1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      color: #004d40;
+    }
+
+    /* Remove default link styling */
+    .container a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    /* Top Section (Exercise Name) */
+    .box .name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #004d40;
+      margin-bottom: 8px;
+    }
+
+    /* Bottom Section (Important Number) */
+    .box .number {
+      font-size: 24px;
+      color: #00796b;
+      font-weight: bold;
+    }
+
+    /* + Button Styling */
+    .add-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #00796b;
+      color: white;
+      font-size: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Popup Modal Background */
+    .modal-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none; /* Initially hidden */
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Modal Content */
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Form Elements */
+    .modal-content select, .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    /* Submit Button */
+    .submit-button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Close Button */
+    .close-button {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #ff5252;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <a href='/'><div class="header">Tracker</div></a>
+  <div class="container">
+    
+    {% for d in data %}
+    <a href="/detay/{{d[0]}}" class="box">
+        <div class="name">{{ d[0] }}</div>
+        <div class="number">{{ d[1] }}</div>
+    </a>
+    {% endfor %}
+
+
+  </div>
+
+  <!-- + Button -->
+  <div class="add-button" onclick="openModal()">+</div>
+
+  <!-- Popup Modal -->
+  <div class="modal-background" id="modal">
+    <div class="modal-content">
+      <h3>Add Exercise Entry</h3>
+      <form action="/ekle" method="post">
+        <!-- onchange ile new movement bakiyoruz -->
+        <select name="hareket" id="dropdownmenu" onchange="checkForNewMovement()" required>
+          <option value="">Select Exercise</option>
+          <!-- here we need to get from db-->
+          {% for move in moves %}
+            <option value="{{move[0]}}">{{move[0]}}</option>
+          {% endfor %}
+          <option value="new">Add New Movement</option>
+        </select>
+        <input type="number" placeholder="Enter Number" value=30 min="0" name="adet" required>
+        <button type="submit" class="submit-button">Submit</button>
+      </form>
+      <button class="close-button" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    function checkForNewMovement() {
+      const dropdown = document.getElementById("dropdownmenu");
+      if(dropdown.value === "new") {
+        const newMovementName = prompt("Enter new move:");
+        if(newMovementName) {
+          const newOption = document.createElement("option");
+          newOption.value = newMovementName;
+          newOption.text = newMovementName;
+          dropdown.add(newOption, dropdown.options[dropdown.options.length -1]);
+          dropdown.value = newMovementName;
+        }
+        else {
+          dropdown.value = "";
+        }
+      }  
+      }
+    
+    
+    // Function to open the modal
+
+    function openModal() {
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    // Function to close the modal
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    // Close the modal if clicked outside of the modal content
+    window.onclick = function(event) {
+      var modal = document.getElementById("modal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+
+</html>

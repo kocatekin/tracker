@@ -1,0 +1,69 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+    background-color: #00796b;
+    color: #fff;
+  }
+
+  /* Container */
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  /* Box Styling */
+  .box, a {
+    width: calc(50% - 15px);
+    border: 2px solid #00796b;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    background-color: #e0f2f1;
+  }
+
+  /* Top Section (Exercise Name) */
+  .box .name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #004d40;
+    margin-bottom: 8px;
+  }
+
+  /* Bottom Section (Important Number) */
+  .box .number {
+    font-size: 24px;
+    color: #00796b;
+    font-weight: bold;
+  }
+
+  /* + Button Styling */
+  .add-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #00796b;
+    color: white;
+    font-size: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
