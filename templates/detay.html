@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise Tracker - Detail Page</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      background-color: #00796b;
+      color: #fff;
+    }
+
+    /* Container for Detail Items */
+    .detail-container {
+      padding: 10px;
+    }
+
+    /* Thin Box Styling for Details */
+    .detail-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      border-bottom: 1px solid #b2dfdb;
+      background-color: #e0f2f1;
+      color: #004d40;
+      font-size: 18px;
+    }
+
+    /* Date on Left */
+    .date {
+      font-weight: bold;
+    }
+
+    /* Number on Right */
+    .number {
+      font-weight: bold;
+      color: #00796b;
+    }
+
+    /* + Button Styling */
+    .add-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #00796b;
+      color: white;
+      font-size: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+	a {
+		text-decoration: none;
+	}
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <a href="/"><div class="header">{{header}}</div></a>
+
+  <!-- Container for Detail Boxes -->
+  <div class="detail-container">
+    <!-- Individual Detail Boxes -->
+
+	{% for d in data %}
+		<div class="detail-box">
+			<div class="date">{{d[0]}}</div>
+			<div class="number">{{d[1]}}</div>
+		</div>
+	{% endfor %}
+    
+    
+    <!-- Add more detail boxes as needed -->
+  </div>
+
+
+</body>
+</html>
